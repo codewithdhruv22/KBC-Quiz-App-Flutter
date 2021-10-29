@@ -35,3 +35,10 @@ await LocalDB.saveUserID(user.uid);
   // }
   
 }
+
+Future<String> signOut() async
+{
+  await googleSignIn.signOut();
+  await _auth.signOut();
+  return "SUCCESS";
+}

@@ -47,6 +47,10 @@ class SideNav extends StatelessWidget {
               listItem(
               label : "About Us",
               icon : Icons.face
+            ),
+            listItem(
+              label : "Logout",
+              icon : Icons.logout
             )
           ],
         ),
@@ -62,10 +66,13 @@ class SideNav extends StatelessWidget {
     final hovercolor = Colors.white60;
 
     return ListTile(
+      
       leading: Icon(icon , color: color,),
       hoverColor: hovercolor,
       title: Text(label , style: TextStyle(color: color)),
-      onTap: (){},
+      onTap: () async{
+        await 
+      },
     );
   }
 }
