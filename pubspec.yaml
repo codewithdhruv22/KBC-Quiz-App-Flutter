@@ -34,6 +34,11 @@ dependencies:
   google_sign_in: any
   flutter_signin_button: any
   cloud_firestore: any
+  internet_connection_checker: ^0.0.1+2
+  overlay_support: ^1.2.1
+  carousel_slider: ^4.0.0
+  confetti: ^0.6.0
+
 
 dev_dependencies:
   flutter_test:
