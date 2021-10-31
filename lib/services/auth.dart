@@ -28,6 +28,9 @@ Future<User?> signWithGoogle() async{
   assert(currentUser!.uid == user!.uid);
 await FireDB().createNewUser(user!.displayName.toString(), user.email.toString(), user.photoURL.toString() , user.uid.toString());
 await LocalDB.saveUserID(user.uid);
+await LocalDB.saveName(user.displayName.toString());
+await LocalDB.saveUrl(user.photoURL.toString());
+
   print(user);
   // }catch(e){
   //   print("ERROR OCCURED IN SIGN IN");
@@ -40,5 +43,6 @@ Future<String> signOut() async
 {
   await googleSignIn.signOut();
   await _auth.signOut();
+  await LocalDB.saveUserID("null");
   return "SUCCESS";
 }
