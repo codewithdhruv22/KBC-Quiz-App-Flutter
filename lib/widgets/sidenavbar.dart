@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kbc/screen/home.dart';
 import 'package:kbc/screen/login.dart';
+import 'package:kbc/screen/profile.dart';
 import 'package:kbc/services/auth.dart';
-import 'package:kbc/services/localdb.dart';
 
 class SideNav extends StatelessWidget {
   String name;
@@ -19,27 +19,40 @@ class SideNav extends StatelessWidget {
         child: ListView(
           // padding:  EdgeInsets.symmetric(horizontal: 20),
           children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20 , vertical: 20),
-              child: Row(children: [
-              CircleAvatar(radius: 30, backgroundImage: NetworkImage(proUrl),),
-              SizedBox(width: 20,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            InkWell(
+              onTap: (){
+                Navigator.push(context , MaterialPageRoute(builder : (context)=>Profile(name: name,rank: rank , proUrl: proUrl,level: "12", money: money,)));
+              },
+              child: Column(
+                crossAxisAlignment : CrossAxisAlignment.start,
                 children: [
-                  Text(name , style: TextStyle(color: Colors.white , fontSize: 20 , fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
-                  Text("Rs.$money" , style: TextStyle(color: Colors.white , fontSize: 15),)
-                ],
-              )  
-              ],),
-
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20 , vertical: 20),
+                    child: Row(children: [
+                    CircleAvatar(radius: 30, backgroundImage: NetworkImage(proUrl),),
+                    SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(name , style: TextStyle(color: Colors.white , fontSize: 20 , fontWeight: FontWeight.bold),),
+                        SizedBox(height: 10,),
+                        Text("Rs.$money" , style: TextStyle(color: Colors.white , fontSize: 15),)
+                      ],
+                    )  
+                    ],),
+            
+                  ),
+               
+              Container(
+                padding: EdgeInsets.only(left: 25),
+                child: Text("Leaderboard - $rank th Rank" , style: TextStyle(color: Colors.white ,fontSize: 19,fontWeight: FontWeight.bold,))
+              ),
+               ],
+              ),
             ),
-            Container(
-              padding: EdgeInsets.only(left: 25),
-              child: Text("Leaderboard - $rank th Rank" , style: TextStyle(color: Colors.white ,fontSize: 19,fontWeight: FontWeight.bold,))
-            ),
-            SizedBox(height: 48,),
+            SizedBox(height: 24,),
+            Divider(thickness: 1,indent: 10,endIndent: 10,),
+            SizedBox(height: 24,),
             listItem(
               context: context,
               path:  MaterialPageRoute(builder: (BuildContext context) => Home()),
