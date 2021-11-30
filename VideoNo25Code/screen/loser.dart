@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Looser extends StatelessWidget {
-  int wonMon;
-  String correctAns;
-
- Looser({required this.wonMon , required this.correctAns});
+  const Looser({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +17,13 @@ class Looser extends StatelessWidget {
             children : [
 Text("Oh Sorry!" , style: TextStyle(fontSize: 35, color: Colors.white , fontWeight : FontWeight.bold,)),
 Text("YOUR ANSWER IS INCORRECT" , style: TextStyle(fontSize: 17 ,color: Colors.white, fontWeight : FontWeight.w500,)),
-Text("CORRECT ANSWER IS ${correctAns}" , style: TextStyle(fontSize: 17 ,color: Colors.white, fontWeight : FontWeight.w500,)),
 SizedBox(height: 15,),
 Text("You Won",style: TextStyle(fontSize: 15 , color: Colors.white,fontWeight : FontWeight.w400,)),
-Text("Rs.${wonMon==2500 ? 0 : wonMon}",style: TextStyle(fontSize: 35 ,color: Colors.white, fontWeight : FontWeight.w700,)),
+Text("Rs.5,40,000",style: TextStyle(fontSize: 35 ,color: Colors.white, fontWeight : FontWeight.w700,)),
 SizedBox(height: 25,),
 Icon(Icons.error_outline , size: 100,color: Colors.white),
 
-  ElevatedButton(child: Text("Go To Rewards"), onPressed: (){
-    Navigator.pop(context);
-  },)
+  ElevatedButton(child: Text("Go To Rewards"), onPressed: (){},)
             ]
           ),
         )

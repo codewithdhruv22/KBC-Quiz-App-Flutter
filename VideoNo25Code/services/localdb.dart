@@ -7,10 +7,6 @@ class LocalDB {
   static final nkey = "45363w54svegrft";
   static final mkey = "65g14er4efesdfeaswcsdfv45";
   static final pkey = "65g14ascafder4ev45";
-  static final Audkey = "gswdgxertea";
-  static final Jokkey = "65g1d24wtafder4ev45";
-  static final F50key = "ffterybewryvwresw";
-  static final ExpKey = "65g14eryjeryubs45wwwwascafder4ev45";
 
   static Future<bool> saveUserID(String uid) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -71,63 +67,4 @@ class LocalDB {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.getString(rkey);
   }
-
-
-
-
-
-
-
-
-
-
-
-  static Future<bool> saveAud(bool isAvail) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setBool(Audkey, isAvail);
-  }
-
-  static Future<bool?> getAud() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.getBool(Audkey);
-  }
-
-
-
-
-  static Future<bool> saveJoker(bool isAvail) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    print("SHARED PREFRWENE");
-    print(isAvail);
-    return await preferences.setBool(Jokkey, isAvail);
-  }
-
-  static Future<bool?> getJoker() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.getBool(Jokkey);
-  }
-
-
-  static Future<bool> save50(bool isAvail) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setBool(F50key, isAvail);
-  }
-
-  static Future<bool?> get50() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.getBool(F50key);
-  }
-
-
-  static Future<bool> saveExp(bool isAvail) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setBool(ExpKey, isAvail);
-  }
-
-  static Future<bool?> getExp() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.getBool(ExpKey);
-  }
-
-
 }

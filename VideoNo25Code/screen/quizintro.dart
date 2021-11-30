@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kbc/screen/question.dart';
 import 'package:kbc/services/QuizDhandha.dart';
-import 'package:kbc/services/QuizQueCreator.dart';
 import 'package:kbc/services/checkQuizUnlock.dart';
-import 'package:kbc/services/localdb.dart';
 
 
 class QuizIntro extends StatefulWidget {
@@ -32,15 +29,6 @@ class QuizIntro extends StatefulWidget {
 
 class _QuizIntroState extends State<QuizIntro> {
 
-
-  setLifeLAvail() async{
-    await LocalDB.saveAud(true);
-    await LocalDB.saveJoker(true);
-    await LocalDB.save50(true);
-    await LocalDB.saveExp(true);
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>Question(quizID: widget.QuizId, queMoney: 5000)));
-  }
-
   bool quizIsUnlcoked = false;
   getQuizUnlockStatus() async{
     await CheckQuizUnlock.checkQuizUnlockStatus(widget.QuizId).then((unlockStatus){
@@ -55,21 +43,17 @@ class _QuizIntroState extends State<QuizIntro> {
     getQuizUnlockStatus();
     super.initState();
 
-
-
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: ElevatedButton(child: Text( quizIsUnlcoked ?  "START QUIZ" : "UNLOCK QUIZ" , style: TextStyle(fontSize: 20),), onPressed: () async{
+      floatingActionButton: ElevatedButton(child: Text( quizIsUnlcoked ?  "START QUIZ" : "UNLOCK QUIZ" , style: TextStyle(fontSize: 20),), onPressed: (){
         quizIsUnlcoked ?
-setLifeLAvail()
-
+        print("QUIZ IS ALREADY UNLOCKED")
             :
         QuizDhandha.buyQuiz(QuizID: widget.QuizId , QuizPrice: int.parse(widget.QuizPrice )).then((quizKharidLiya){
           if(quizKharidLiya){
-            print("GIII");
             setState(() {
               quizIsUnlcoked = true;
             });
@@ -137,25 +121,6 @@ setLifeLAvail()
                       ],
                     ),
                     Text("${widget.QuizDuration} Minutes" ,textAlign: TextAlign.left, style: TextStyle(fontSize: 17),)
-                  ],),
-              ) ,
-
-
-              quizIsUnlcoked ? Container():Container(
-                padding: EdgeInsets.all(18),
-                child:
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    Row(
-                      children: [
-                        Icon(Icons.money),
-                        SizedBox(width: 6,),
-                        Text("Money -" , style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                    Text(" Rs. ${widget.QuizPrice}" ,textAlign: TextAlign.left, style: TextStyle(fontSize: 17),)
                   ],),
               ) ,
               Container(

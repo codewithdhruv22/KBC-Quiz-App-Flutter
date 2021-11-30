@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbc/services/localdb.dart';
 
 class Profile extends StatefulWidget {
   String name;
@@ -22,31 +20,6 @@ required this.money,
 }
 
 class _ProfileState extends State<Profile> {
-
-  late  List<QueryDocumentSnapshot<Map<String, dynamic>>> LeadersList;
-  getLeaders() async{
-
-    await FirebaseFirestore.instance.collection("users").orderBy("money").get().then((value){
-
-        setState(() {
-          LeadersList = value.docs.reversed.toList();
-          widget.rank =  (LeadersList.indexWhere((element) => element.data()["name"] == widget.name) + 1).toString();
-        });
-
-
-    });
-
-    await LocalDB.saveRank(widget.rank);
-
-
-    }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getLeaders();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +91,22 @@ class _ProfileState extends State<Profile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-
+                      Column(
+                        children: [
+                          Text(
+                           widget.level,
+                            style: TextStyle(
+                                fontSize: 42,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.white.withOpacity(0.9)),
+                          ),
+                          Text("Level",
+                              style: TextStyle(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ],
+                      ),
                       Column(
                         children: [
                           Text("#${widget.rank}",
@@ -159,24 +147,26 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 CircleAvatar(
                                   backgroundImage: NetworkImage(
-                                      LeadersList[index].data()["photoUrl"]),
+                                      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=580&q=80"),
                                 ),
                                 SizedBox(
                                   width: 3,
                                 ),
-                                Text( LeadersList[index].data()["name"].toString().length >=12 ?  "${(LeadersList[index].data()["name"]).toString().substring(0,12)}..." : (LeadersList[index].data()["name"]).toString()  )
+                                Text("Dhananjay Arne")
                               ],
                             ),
                             leading: Text("#${index + 1}" ,style: TextStyle(fontWeight: FontWeight.bold),),
                             trailing: Text(
-                                "Rs.${ LeadersList[index].data()["money"].toString()}",style: TextStyle(fontWeight: FontWeight.bold)),
+                                "Rs.${(200000 / (index + 1)).toString().substring(0, 5)}",style: TextStyle(fontWeight: FontWeight.bold)),
                           );
                         },
                         separatorBuilder: (context, index) => Divider(thickness: 1,color: Colors.purple,indent: 10,endIndent: 10,),
-                        itemCount: LeadersList.length),
+                        itemCount: 12),
                   ),
                 ),
-
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                    child: ElevatedButton(onPressed: (){}, child: Text("Show My Position")))
               ],
             )
           ],

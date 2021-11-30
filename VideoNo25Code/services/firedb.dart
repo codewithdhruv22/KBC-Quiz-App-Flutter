@@ -16,7 +16,7 @@ class FireDB {
         "name": name,
         "email": email,
         "photoUrl": photoUrl,
-        "money": 0,
+        "money": "0",
         "rank" :  "NA",
         "level" : "0"
       }).then((value) async {
@@ -27,22 +27,6 @@ class FireDB {
       });
     }
   }
-  
-  static updateMoney(int amount) async{
-    if(amount != 2500){
-      final FirebaseAuth _myauth = FirebaseAuth.instance;
-
-      await FirebaseFirestore.instance.collection("users").doc(_myauth.currentUser!.uid).get().then((value) async{
-        await LocalDB.saveMoney((value.data()!["money"] + amount).toString());
-        await FirebaseFirestore.instance.collection("users").doc(_myauth.currentUser!.uid).update(
-            {"money" : value.data()!["money"] + amount})  ;
-      });
-    }
-
-
-  }
-
-
 
   Future<bool> getUser() async {
     final User? current_user = _auth.currentUser;
