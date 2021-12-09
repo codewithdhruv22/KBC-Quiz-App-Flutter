@@ -41,6 +41,22 @@ class _ProfileState extends State<Profile> {
 
     }
 
+
+  String k_m_b_generator(num) {
+    if (num > 999 && num < 99999) {
+      return "${(num / 1000).toStringAsFixed(1)} K";
+    } else if (num > 99999 && num < 999999) {
+      return "${(num / 1000).toStringAsFixed(0)} K";
+    } else if (num > 999999 && num < 999999999) {
+      return "${(num / 1000000).toStringAsFixed(1)} M";
+    } else if (num > 999999999) {
+      return "${(num / 1000000000).toStringAsFixed(1)} B";
+    } else {
+      return num.toString();
+    }
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -66,6 +82,7 @@ class _ProfileState extends State<Profile> {
       body: SingleChildScrollView(
 
         child: Column(
+
           children: [
 
             Container(
@@ -77,6 +94,7 @@ class _ProfileState extends State<Profile> {
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20))),
               child: Column(
+
                 children: [
                   Stack(
                     children: [
@@ -98,11 +116,13 @@ class _ProfileState extends State<Profile> {
                     height: 10,
                   ),
                   Text(
-                    "${widget.name}\nRs.${widget.money}",
+                    "${widget.name}\nRs.${k_m_b_generator(int.parse(widget.money))}",
                     style: TextStyle(
                         fontSize: 22,
+
                         color: Colors.white,
                         fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(
                     height: 20,
@@ -169,7 +189,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             leading: Text("#${index + 1}" ,style: TextStyle(fontWeight: FontWeight.bold),),
                             trailing: Text(
-                                "Rs.${ LeadersList[index].data()["money"].toString()}",style: TextStyle(fontWeight: FontWeight.bold)),
+                                "Rs.${ k_m_b_generator(int.parse(LeadersList[index].data()["money"].toString()))}",style: TextStyle(fontWeight: FontWeight.bold)),
                           );
                         },
                         separatorBuilder: (context, index) => Divider(thickness: 1,color: Colors.purple,indent: 10,endIndent: 10,),

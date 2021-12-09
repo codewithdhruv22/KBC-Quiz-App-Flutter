@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbc/screen/quizintro.dart';
@@ -22,6 +23,8 @@ class _HomeState extends State<Home> {
   String level = "0";
 
 late List quizzes;
+
+bool isLoading  = true;
   getUserDet() async {
     await LocalDB.getName().then((value) {
       setState(() {
@@ -59,8 +62,19 @@ late List quizzes;
      await HomeFire.getquizzes().then((returned_quizzes){
        setState(() {
          quizzes = returned_quizzes;
+         isLoading = false;
        });
      });
+  }
+  late Map<String, dynamic> TopPlayer;
+  getTopPlayer() async{
+    await FirebaseFirestore.instance.collection("users").orderBy("money" ,descending: true).get().then((value) {
+      setState(()  {
+
+      TopPlayer =  value.docs.elementAt(0).data();
+
+      });
+    });
   }
 
   @override
@@ -68,12 +82,26 @@ late List quizzes;
     super.initState();
     getUserDet();
     getquiz();
+    getTopPlayer();
 
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
+    return isLoading ? Scaffold(
+      body: Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("KBC QUIZ APP" , style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.w700),),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40 , vertical: 20),
+              child: LinearProgressIndicator(),
+            ),
+          ],
+        ),
+      ),
+    )  :  RefreshIndicator(
       onRefresh: () async{
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
       },
@@ -228,15 +256,11 @@ late List quizzes;
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Top Player In This Week",
+                              "Richest Player In The World",
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              "Last Updated 5 Days Ago",
-                              style: TextStyle(
-                                  fontSize: 11, fontWeight: FontWeight.w400),
-                            ),
+
                             SizedBox(
                               height: 20,
                             ),
@@ -244,7 +268,7 @@ late List quizzes;
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.grey,
+                            backgroundImage: NetworkImage(TopPlayer["photoUrl"]),
                                   radius: 50,
                                 ),
                                 SizedBox(
@@ -254,16 +278,13 @@ late List quizzes;
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Dhruv Arne",
+                                      TopPlayer["name"].toString().length >=16 ? "${TopPlayer["name"].toString().substring(0,15)}...": TopPlayer["name"],
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text("Player ID - ABD553",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w300)),
-                                    Text("Rs.55 Lakh",
+
+                                    Text("Rs. ${TopPlayer["money"]}",
                                         style: TextStyle(
                                             fontSize: 24,
                                             fontWeight: FontWeight.bold))

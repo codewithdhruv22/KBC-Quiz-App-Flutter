@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:kbc/screen/question.dart';
 import 'package:kbc/services/QuizDhandha.dart';
@@ -38,6 +39,8 @@ class _QuizIntroState extends State<QuizIntro> {
     await LocalDB.saveJoker(true);
     await LocalDB.save50(true);
     await LocalDB.saveExp(true);
+    final player = AudioCache();
+    player.play("audio_effects/KBC_INTRO.mp3");
     Navigator.push(context, MaterialPageRoute(builder: (context)=>Question(quizID: widget.QuizId, queMoney: 5000)));
   }
 

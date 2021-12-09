@@ -69,7 +69,7 @@ class FireDB {
           .then((value) async {
         user = value.data().toString();
         print(user);
-        await LocalDB.saveMoney(value["money"]);
+        await LocalDB.saveMoney(value["money"].toString());
         await LocalDB.saveRank(value["rank"]);
         await LocalDB.saveLevel(value["level"]);
       });

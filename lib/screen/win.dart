@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -18,6 +19,18 @@ class _WinState extends State<Win> {
 
   late ConfettiController confettiController;
 
+
+
+
+
+  playWinSound() async {
+
+    final player = AudioCache();
+    player.play("audio_effects/CORRECT.mp3");
+  }
+
+
+
   @override
   void initState() {
 
@@ -25,6 +38,7 @@ class _WinState extends State<Win> {
     setState(() {
       initController();
     });
+    playWinSound();
     confettiController.play();
   }
 

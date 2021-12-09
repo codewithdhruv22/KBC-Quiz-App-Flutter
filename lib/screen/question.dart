@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:kbc/screen/loser.dart';
 import 'package:kbc/screen/win.dart';
 import 'package:kbc/services/QuestionModel.dart';
 import 'package:kbc/services/QuizQueCreator.dart';
 import 'package:kbc/services/firedb.dart';
-import 'package:kbc/services/localdb.dart';
 import 'package:kbc/widgets/lifeline_sidebar.dart';
 
 class Question extends StatefulWidget {
@@ -22,7 +21,7 @@ class Question extends StatefulWidget {
 class _QuestionState extends State<Question> {
 
   QuestionModel questionModel = new QuestionModel();
-
+  AudioPlayer audioPlayer = AudioPlayer();
   genQue() async{
     await QuizQueCreator.genQuizQue(widget.quizID, widget.queMoney).then((queData){
 
@@ -63,6 +62,11 @@ class _QuestionState extends State<Question> {
   int seconds = 30;
   Timer? timer;
 
+
+
+
+  final player = AudioCache();
+
   QueTimer(){
 
 
@@ -70,6 +74,7 @@ class _QuestionState extends State<Question> {
 
       setState(() => seconds--);
       if(seconds==0){
+
         timer?.cancel();
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Looser(wonMon: widget.queMoney == 5000 ? 0 :   widget.queMoney~/2, correctAns: questionModel.correctAnswer)));
 
@@ -83,6 +88,34 @@ class _QuestionState extends State<Question> {
 
   }
 
+
+
+  playLocal() async {
+
+    if(widget.queMoney != 5000){
+
+      final player = AudioCache();
+      player.play("audio_effects/QUESTION.mp3");
+
+    }
+  }
+
+
+  playLock() async {
+
+    final player = AudioCache();
+    player.play("audio_effects/LOCK_SCREEN.mp3");
+  }
+//TASK - ADD OTHER SOUND EFFECTS TO THE APP
+
+
+  playLosserSound() async {
+
+    final player = AudioCache();
+    player.play("audio_effects/WORNG_ANSWER.mp3");
+  }
+
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -95,7 +128,11 @@ class _QuestionState extends State<Question> {
     // TODO: implement initState
     super.initState();
     genQue();
+    playLocal();
     QueTimer();
+
+ 
+    
 
   }
 
@@ -206,16 +243,20 @@ SizedBox(height: 10,),
                   print("DOUBLE TAP TO LOCK THE ANSWER");
                 }
                 ,
-                onLongPress: (){
+                onLongPress: () {
+
+                  playLock();
+                  timer?.cancel();
                   setState(() {
                     optALocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 2) , () async{
+                  Future.delayed(Duration(seconds: 15) , () async{
                     if(questionModel.option1 == questionModel.correctAnswer){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Win(widget.queMoney ,widget.quizID  )));
                     }else{
                       await FireDB.updateMoney(widget.queMoney~/2);
+                      playLosserSound();
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Looser(wonMon: (widget.queMoney~/2), correctAns: questionModel.correctAnswer,)));
                     }
                   });
@@ -234,16 +275,19 @@ SizedBox(height: 10,),
                   print("DOUBLE TAP TO LOCK THE ANSWER");
                 }
                 ,
-                onLongPress: (){
+                onLongPress: () {
+                  playLock();
+                  timer?.cancel();
                   setState(() {
                     optBLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 2) , () async{
+                  Future.delayed(Duration(seconds: 15) , () async{
                     if(questionModel.option2 == questionModel.correctAnswer){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Win(widget.queMoney ,widget.quizID  )));
                     }else{
                       await FireDB.updateMoney(widget.queMoney~/2);
+                      playLosserSound();
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Looser(wonMon: (widget.queMoney~/2), correctAns: questionModel.correctAnswer,)));
                     }
                   });
@@ -258,20 +302,25 @@ SizedBox(height: 10,),
                 ),
               ),
               InkWell(
-                onTap : (){
+                onTap : () {
                   print("DOUBLE TAP TO LOCK THE ANSWER");
                 }
                 ,
-                onLongPress: (){
+
+                onLongPress: () {
+                  playLock();
+                  timer?.cancel();
+
                   setState(() {
                     optCLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 2) , () async{
+                  Future.delayed(Duration(seconds: 15) , () async{
                     if(questionModel.option3 == questionModel.correctAnswer){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Win(widget.queMoney ,widget.quizID  )));
                     }else{
                       await FireDB.updateMoney(widget.queMoney~/2);
+                      playLosserSound();
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Looser(wonMon: (widget.queMoney~/2), correctAns: questionModel.correctAnswer,)));
                     }
                   });
@@ -290,16 +339,19 @@ SizedBox(height: 10,),
                   print("DOUBLE TAP TO LOCK THE ANSWER");
                 }
                 ,
-                onLongPress: (){
+                onLongPress: () {
+                  playLock();
+                  timer?.cancel();
                   setState(() {
                     optDLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 2) , () async{
+                  Future.delayed(Duration(seconds: 15) , () async{
                     if(questionModel.option4 == questionModel.correctAnswer){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Win(widget.queMoney ,widget.quizID  )));
                     }else{
                       await FireDB.updateMoney(widget.queMoney~/2);
+                      playLosserSound();
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Looser(wonMon: (widget.queMoney~/2), correctAns: questionModel.correctAnswer,)));
                     }
                   });
