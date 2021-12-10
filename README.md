@@ -1,6 +1,24 @@
-# kbc
+# KBC Quiz APp
 
-A new Flutter project.
+A Quiz app which looks like KBC Quiz Show. It has different quizzes and also lifeline and you can also win money similarly like quiz app.
+It has following pages - 
+
+--> Home Page
+--> Profile Page
+--> Quiz Introduction Page
+--> Question Screen
+--> Winning Screen
+--> Looser Screen
+--> Cheque Giving Screen
+--> About Developer Page
+--> How To Use Page
+--> Audience Poll Screen
+--> 50:50 Lifeline Screen
+--> Ask The Expert Screen
+
+The Complete Project Is Explained On My YouTube Channel  - 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/UIyWhCoEZ7w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## Getting Started
 
