@@ -4,19 +4,32 @@ A Quiz app which looks like KBC Quiz Show. It has different quizzes and also lif
 It has following pages - 
 
 --> Home Page
+
 --> Profile Page
+
 --> Quiz Introduction Page
+
 --> Question Screen
+
 --> Winning Screen
+
 --> Looser Screen
+
 --> Cheque Giving Screen
+
 --> About Developer Page
+
 --> How To Use Page
+
 --> Audience Poll Screen
+
 --> 50:50 Lifeline Screen
+
 --> Ask The Expert Screen
 
+
 The Complete Project Is Explained On My YouTube Channel  - 
+
 https://www.youtube.com/watch?v=UIyWhCoEZ7w&list=PLlvhNpz1tBvGvDfWLTHt7gn6kFAkvCKGO&index=1
 
 
