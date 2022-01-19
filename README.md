@@ -1,4 +1,4 @@
-# KBC Quiz APp
+# KBC Quiz App
 
 A Quiz app which looks like KBC Quiz Show. It has different quizzes and also lifeline and you can also win money similarly like quiz app.
 It has following pages - 
